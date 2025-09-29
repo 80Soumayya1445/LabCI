@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
       "lint": "eslint .",
-      "build": "mkdir -p dist && cp index.js dist/"
+      "build": "mkdir -p dist && cp index.js dist/",
+      "start": "npx serve dist"
 
 
   },
