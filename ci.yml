@@ -1,4 +1,4 @@
-name: CI Workflow
+name: CI/CD Workflow
 
 on:
   push:
@@ -40,3 +40,20 @@ jobs:
         with:
           name: build-output
           path: dist/
+
+  deploy:
+    needs: lint-test-build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download Build Artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: build-output
+          path: dist/
+
+      - name: Deploy to Render
+        run: |
+          curl -X POST "https://api.render.com/v1/services/<YOUR_SERVICE_ID>/deploys" \
+            -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
+            -H "Accept: application/json"
